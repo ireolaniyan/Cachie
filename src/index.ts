@@ -1,15 +1,12 @@
-import express from 'express';
-import cachie from './routes/cachie';
+import appRoot from 'app-root-path';
+import dotenv from 'dotenv';
+import app from './app';
 import { logger } from './util/logger';
 
-const app = express();
-app.use(express.json());
-app.use('/api/v1', cachie);
+dotenv.config({ path: `${appRoot.path}/.env` });
 
-app.get('/', (req, res) => {
-  res.send('Hello from Cachie API');
-});
+const NODE_ENV = process.env.NODE_ENV;
 
-const port = process.env.PORT || 3000;
+const port = NODE_ENV && NODE_ENV.toLowerCase() === "local" ? process.env.PORT : process.env.TEST_PORT;
 
-app.listen(port, () => logger.info(`App listening on PORT ${port}`));
+app.listen(port, () => logger.info(`App listening on PORT: ${port}`));

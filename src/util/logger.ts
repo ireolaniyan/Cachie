@@ -1,5 +1,8 @@
 import appRoot from 'app-root-path';
+import dotenv from 'dotenv';
 import { createLogger, format, transports } from "winston";
+
+dotenv.config({ path: `${appRoot.path}/.env` });
 
 const NODE_ENV = process.env.NODE_ENV;
 
