@@ -43,3 +43,26 @@ describe('Search', () => {
     expect(response.body.status).toMatch("ok");
   });
 });
+
+describe('Analyse', () => {
+  it('should fail when analysis_token is missing', async () => {
+    const response = await request(app).get(`/api/v1/analyse`);
+    expect(response.status).toBe(400);
+    expect(response.body.error).toMatch('"analysis_token" is required');
+  });
+
+  it('should fail when analysis_token is empty', async () => {
+    const response = await request(app).get(`/api/v1/analyse?analysis_token=`);
+    expect(response.status).toBe(400);
+    expect(response.body.error).toMatch('"analysis_token" is not allowed to be empty');
+  });
+
+  it('should return results for a valid analysis_token', async () => {
+    const analysis_token = "the quick,lazy dog,the";
+
+    const response = await request(app).get(`/api/v1/analyse?analysis_token=${analysis_token}`);
+    expect(response.status).toBe(200);
+    expect(response.body.results).toBeDefined();
+    expect(response.body.time).toBeDefined();
+  });
+})
