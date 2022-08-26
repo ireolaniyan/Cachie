@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { analyseToken, cacheSingleWords } from '../helpers/wordcache';
+import { analyseToken, cacheDoubleWords, cacheSingleWords } from '../helpers/wordcache';
 
 export async function search(
   req: Request,
@@ -10,6 +10,7 @@ export async function search(
 
   try {
     cacheSingleWords(search_query);
+    cacheDoubleWords(search_query);
     
     return res.status(200).send({
       status: "ok",
