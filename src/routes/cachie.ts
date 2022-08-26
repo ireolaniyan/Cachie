@@ -12,6 +12,7 @@ router.post(
 
 router.get(
   "/analyse",
+  CachieValidation.validateAnalyseToken,
   CachieContoller.analyse,
 )
 
