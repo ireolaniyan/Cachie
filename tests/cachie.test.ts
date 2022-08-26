@@ -8,7 +8,7 @@ afterAll(async () => {
 });
 
 describe('Search', () => {
-  it('should fail when search_query is missing', async (done) => {
+  it('should fail when search_query is missing', async () => {
     const payload = {
       search: "The quick brown fox jumps over the lazy dog"
     }
@@ -17,7 +17,6 @@ describe('Search', () => {
     expect(response.status).toBe(400);
     expect(response.body.error).toBeDefined();
     expect(response.body.error).toMatch('"search_query" is required');
-    done();
   });
 
   it('should fail when an unknown field is added', async () => {
