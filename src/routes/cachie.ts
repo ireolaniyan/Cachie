@@ -7,7 +7,12 @@ const router = express.Router();
 router.post(
   "/search",
   CachieValidation.validateSearchCachie,
-  CachieContoller.search
+  CachieContoller.search,
 );
+
+router.get(
+  "/analyse",
+  CachieContoller.analyse,
+)
 
 export default router;
