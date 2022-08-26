@@ -1,4 +1,5 @@
 import * as Cache from 'memory-cache';
+import { logger } from '../util/logger';
 
 const EXPIRY_TIME = 30 * 60 * 1000;       // 30 minutes
 
@@ -13,6 +14,8 @@ export function cacheSingleWords(query: string): void {
     } else {
       Cache.put(word.toLowerCase(), 1 + cacheContainsWord, EXPIRY_TIME);
     }
+
+    logger.info(`Token: '${word.toLowerCase()}' was added to the cache, valid for 30 minutes`);
   });
 }
 
@@ -29,6 +32,8 @@ export function cacheDoubleWords(query: string): void {
     } else {
       Cache.put(word.toLowerCase(), 1 + cacheContainsWord, EXPIRY_TIME);
     }
+
+    logger.info(`Token: '${word.toLowerCase()}' was added to the cache, valid for 30 minutes`);
   }
 }
 
@@ -38,10 +43,15 @@ export function analyseToken(token: string): { result: object } {
 
   values.forEach(tokenValue => {
     const getWord = Cache.get(tokenValue.toLowerCase());
+
+    if (!getWord) {
+      logger.info(`Token: '${tokenValue.toLowerCase()}' does not exist in the cache`);
+    } else {
+      logger.info(`Token: '${tokenValue.toLowerCase()}' was found`);
+    }
+
     result[tokenValue.toLowerCase()] = getWord ? getWord : 0;
   });
-
-  // console.log({ result });
   
   return result;
 }

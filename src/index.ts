@@ -1,5 +1,6 @@
 import express from 'express';
 import cachie from './routes/cachie';
+import { logger } from './util/logger';
 
 const app = express();
 app.use(express.json());
@@ -11,4 +12,4 @@ app.get('/', (req, res) => {
 
 const port = process.env.PORT || 3000;
 
-app.listen(port, () => console.log(`App listening on PORT ${port}`));
+app.listen(port, () => logger.info(`App listening on PORT ${port}`));
