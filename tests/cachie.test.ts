@@ -5,6 +5,7 @@ jest.setTimeout(30000);
 
 afterAll(async () => {
   await new Promise<void>(resolve => setTimeout(() => resolve(), 10000)); // avoid jest open handle error
+  // await app.close();
 });
 
 describe('Search', () => {
@@ -13,7 +14,9 @@ describe('Search', () => {
       search: "The quick brown fox jumps over the lazy dog"
     }
 
-    const response = await request(app).post('/api/v1/search').send(payload);
+    const response = await request(app)
+    .post('/api/v1/search')
+    .send(payload);
     expect(response.status).toBe(400);
     expect(response.body.error).toBeDefined();
     expect(response.body.error).toMatch('"search_query" is required');
@@ -25,7 +28,9 @@ describe('Search', () => {
       search: "The quick brown fox jumps over the lazy dog"
     }
 
-    const response = await request(app).post('/api/v1/search').send(payload);
+    const response = await request(app)
+    .post('/api/v1/search')
+    .send(payload);
     expect(response.status).toBe(400);
     expect(response.body.error).toBeDefined();
     expect(response.body.error).toMatch('"search" is not allowed');
@@ -36,7 +41,9 @@ describe('Search', () => {
       search_query: "The quick brown fox jumps over the lazy dog"
     }
 
-    const response = await request(app).post('/api/v1/search').send(payload);
+    const response = await request(app)
+    .post('/api/v1/search')
+    .send(payload);
     expect(response.status).toBe(200);
     expect(response.body.status).toBeDefined();
     expect(response.body.status).toMatch("ok");
@@ -45,13 +52,15 @@ describe('Search', () => {
 
 describe('Analyse', () => {
   it('should fail when analysis_token is missing', async () => {
-    const response = await request(app).get(`/api/v1/analyse`);
+    const response = await request(app)
+    .get(`/api/v1/analyse`);
     expect(response.status).toBe(400);
     expect(response.body.error).toMatch('"analysis_token" is required');
   });
 
   it('should fail when analysis_token is empty', async () => {
-    const response = await request(app).get(`/api/v1/analyse?analysis_token=`);
+    const response = await request(app)
+    .get(`/api/v1/analyse?analysis_token=`);
     expect(response.status).toBe(400);
     expect(response.body.error).toMatch('"analysis_token" is not allowed to be empty');
   });
@@ -59,9 +68,10 @@ describe('Analyse', () => {
   it('should return results for a valid analysis_token', async () => {
     const analysis_token = "the quick,lazy dog,the";
 
-    const response = await request(app).get(`/api/v1/analyse?analysis_token=${analysis_token}`);
+    const response = await request(app)
+    .get(`/api/v1/analyse?analysis_token=${analysis_token}`);
     expect(response.status).toBe(200);
     expect(response.body.results).toBeDefined();
     expect(response.body.time).toBeDefined();
   });
-})
+});
