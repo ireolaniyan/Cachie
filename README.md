@@ -23,9 +23,9 @@ To illustrate the behaviour, here is an example:
 
 # How to run Cachie API
 
-1. clone the Github repository
+1. Clone the Github repository
 2. `npm install`
-3. create a `.env` file annd add the environment variables found in `.env.example`
-4. run the API using the following command: `npm run dev`
-5. To run tests, set `NODE_ENV=test` in env and run the following command: `npm test`
-6. while Cachie API is running, visit `http://localhost:3000/api-documentation/` to view documentation
+3. Create a `.env` file and add the environment variables found in `.env.example`
+4. Run the API using the following command: `npm run dev`
+5. While Cachie API is running, visit `http://localhost:3000/api-documentation/` to view documentation
+6. To run tests, set `NODE_ENV=test` in env and run the following command: `npm test`
