@@ -18,6 +18,15 @@ const apiDoc = {
       },
       required: ['results', 'time'],
     },
+    Search: {
+      type: 'object',
+      properties: {
+        search_query: {
+          type: 'string',
+        }
+      },
+      required: ['search_query'],
+    }
   },
   paths: {}
 };
