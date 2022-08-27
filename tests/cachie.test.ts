@@ -3,11 +3,6 @@ import app from '../src/app';
 
 jest.setTimeout(30000);
 
-afterAll(async () => {
-  await new Promise<void>(resolve => setTimeout(() => resolve(), 10000)); // avoid jest open handle error
-  // await app.close();
-});
-
 describe('Search', () => {
   it('should fail when search_query is missing', async () => {
     const payload = {
